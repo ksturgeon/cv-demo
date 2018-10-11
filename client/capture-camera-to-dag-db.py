@@ -53,11 +53,9 @@ tbl_path = raw_input("Table path [/demo-tables/raw-images]:")
 if len(tbl_path) == 0:
   tbl_path="/demo-tables/raw-images"
 
-#p = Producer({'streams.producer.default.stream': '/mapr/gcloud.cluster.com/tmp/rawvideostream'})
-
 """Create a connection, capture frame, preprocess, insert new document into store"""
 
-#Create a connection
+# Create a connection
 connection_str = "{}:5678?auth=basic;user={};password={};ssl=false".format(host,username,password) 
 connection = ConnectionFactory.get_connection(connection_str=connection_str)
 
@@ -67,7 +65,7 @@ if connection.is_store_exists(store_path=tbl_path):
 else:
   document_store = connection.create_store(store_path=tbl_path)
 
-
+# Open camera device
 cap = cv2.VideoCapture(dvc)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,320)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
@@ -85,13 +83,18 @@ while (cap.isOpened):
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+    # Create document and insert it into the database using a single ID
+    rawdoc = {}
+    rawdoc = ['image'] = jpeg.tostring()
+    document_store.insert_or_replace(doc=json.loads(rawdoc), _id="0")
 
     #p.produce('topic1', jpeg.tostring(), str(frame_counter))
     
     print("frame: "+str(frame_counter))
     time.sleep(1/fps)
 
-p.flush()
+connection.close()
+#p.flush()
 cap.release()
 cv2.destroyAllWindows()
 
