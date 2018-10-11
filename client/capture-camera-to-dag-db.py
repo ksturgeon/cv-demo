@@ -85,7 +85,7 @@ while (cap.isOpened):
         break
     # Create document and insert it into the database using a single ID
     rawdoc = {}
-    rawdoc = ['image'] = jpeg.tostring()
+    rawdoc['image'] = jpeg.tostring()
     document_store.insert_or_replace(doc=json.loads(rawdoc), _id="0")
 
     #p.produce('topic1', jpeg.tostring(), str(frame_counter))
