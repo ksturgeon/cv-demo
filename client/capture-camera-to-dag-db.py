@@ -27,6 +27,12 @@ def resize(im, target_size, max_size):
 print("Non-secure cluster only, existing blank table with CDC turned on")
 print("Check X Server running and accepting inbound connections via xhost +")
 
+dvc = raw_input("device [0] for integrated camera, 1 for USB camera:")
+if len(dvc) == 0:
+  dvc=int(0)
+else:
+  dvc=int(dvc)
+
 fps = raw_input("Frames per second [1]:")
 if len(fps) == 0:
   fps=float(1)
@@ -61,15 +67,8 @@ if connection.is_store_exists(store_path=tbl_path):
 else:
   document_store = connection.create_store(store_path=tbl_path)
 
-"""
-if len(sys.argv) > 1:
-    fps = float(sys.argv[1])
-else:
-    print("USAGE: Frames-per-second must be specified as a command line argument")
-    exit(1)
-"""
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(dvc)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,320)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
 
