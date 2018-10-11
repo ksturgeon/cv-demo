@@ -5,7 +5,7 @@ from mapr.ojai.ojai_query.QueryOp import QueryOp
 from mapr.ojai.storage.ConnectionFactory import ConnectionFactory
 
 import numpy as np
-import sys, cv2, time, pickle, json, getpass
+import sys, cv2, time, pickle, json, getpass, base64
 
 def resize(im, target_size, max_size):
     """
@@ -84,9 +84,9 @@ while (cap.isOpened):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     # Create document and insert it into the database using a single ID
-    rawdoc = {}
-    rawdoc['image'] = jpeg.tostring()
-    document_store.insert_or_replace(doc=json.loads(rawdoc), _id="0")
+    d = connection.new_document()
+    d.set(field_path ='image', value=base64.b64encode(jpeg))
+    document_store.insert_or_replace(doc=d, _id="0")
 
     #p.produce('topic1', jpeg.tostring(), str(frame_counter))
     
