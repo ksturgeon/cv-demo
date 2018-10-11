@@ -18,4 +18,4 @@ maprcli stream create -path /demo-streams/dbchanges -produceperm p -consumeperm 
 maprcli stream topic create -path /demo-streams/dbchanges -topic topic1 -partitions 3
 
 # Set up table change propagation
-maprcli changelog add -path /demo-tables/raw-images -changelog /demo-streams/dbchanges:topic1
+maprcli table changelog add -path /demo-tables/raw-images -changelog /demo-streams/dbchanges:topic1
