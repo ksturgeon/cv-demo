@@ -8,7 +8,7 @@ hadoop fs -rm -r -f /demo-files
 # Create Volumes
 maprcli volume create -name demo-tables -path /demo-tables -readAce 'p' -writeAce 'p'
 maprcli volume create -name demo-streams -path /demo-streams -readAce 'p' -writeAce 'p'
-maprcli volume create -name demo-streams -path /demo-files -readAce 'p' -writeAce 'p'
+maprcli volume create -name demo-files -path /demo-files -readAce 'p' -writeAce 'p'
 
 # Create Tables - expecting CDC since we need to be notified of a new image
 maprcli table create -path /demo-tables/raw-images -tabletype json
