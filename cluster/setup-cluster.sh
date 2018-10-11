@@ -1,9 +1,5 @@
 #! /bin/bash
 
-# Flush the old volumes and tables if any
-hadoop fs -rm -r -f /demo-tables
-hadoop fs -rm -r -f /demo-streams
-hadoop fs -rm -r -f /demo-files
 
 # Create Volumes
 maprcli volume create -name demo-tables -path /demo-tables -readAce 'p' -writeAce 'p'
@@ -18,4 +14,4 @@ maprcli stream create -path /demo-streams/dbchanges -produceperm p -consumeperm 
 maprcli stream topic create -path /demo-streams/dbchanges -topic topic1 -partitions 3
 
 # Set up table change propagation
-maprcli table changelog add -path /demo-tables/raw-images -changelog /demo-streams/dbchanges:topic1
+maprcli table changelog add -path /demo-tables/raw-images -changelog /demo-streams/dbchanges:topic1 -useexistingtopic true
