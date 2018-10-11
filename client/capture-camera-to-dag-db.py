@@ -5,7 +5,7 @@ from mapr.ojai.ojai_query.QueryOp import QueryOp
 from mapr.ojai.storage.ConnectionFactory import ConnectionFactory
 
 import numpy as np
-import sys, cv2, time, pickle
+import sys, cv2, time, pickle, json, getpass
 
 def resize(im, target_size, max_size):
     """
@@ -24,7 +24,35 @@ def resize(im, target_size, max_size):
     im = cv2.resize(im, None, None, fx=im_scale, fy=im_scale, interpolation=cv2.INTER_LINEAR)
     return im, im_scale
 
-p = Producer({'streams.producer.default.stream': '/mapr/gcloud.cluster.com/tmp/rawvideostream'})
+print("Non-secure cluster only, existing blank table with CDC turned on")
+print("X Server running and accepting inbound connections via xhost +")
+
+host = raw_input("DAG host:")
+username = raw_input("username [mapr]:")
+if len(username) == 0:
+  username="mapr"
+password = getpass.getpass(prompt = "Password [maprmapr]:")
+if len(password) == 0:
+  password="maprmapr"
+tbl_path = raw_input("Table path [/demo-tables/raw-images]:")
+if len(tbl_path) == 0:
+  tbl_path="/demo-tables/raw-images"
+
+#p = Producer({'streams.producer.default.stream': '/mapr/gcloud.cluster.com/tmp/rawvideostream'})
+
+"""Create a connection, capture frame, preprocess, insert new document into store"""
+
+#Create a connection
+connection_str = "{}:5678?auth=basic;user={};password={};ssl=false".format(host,username,password) 
+connection = ConnectionFactory.get_connection(connection_str=connection_str)
+
+# Get a store and assign it as a DocumentStore object
+if connection.is_store_exists(store_path=tbl_path):
+  document_store = connection.get_store(store_path=tbl_path)
+else:
+  document_store = connection.create_store(store_path=tbl_path)
+
+
 if len(sys.argv) > 1:
     fps = float(sys.argv[1])
 else:
@@ -49,7 +77,8 @@ while (cap.isOpened):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-    p.produce('topic1', jpeg.tostring(), str(frame_counter))
+    #p.produce('topic1', jpeg.tostring(), str(frame_counter))
+    
     print("frame: "+str(frame_counter))
     time.sleep(1/fps)
 
