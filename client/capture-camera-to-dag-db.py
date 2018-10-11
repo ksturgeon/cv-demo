@@ -25,15 +25,24 @@ def resize(im, target_size, max_size):
     return im, im_scale
 
 print("Non-secure cluster only, existing blank table with CDC turned on")
-print("X Server running and accepting inbound connections via xhost +")
+print("Check X Server running and accepting inbound connections via xhost +")
+
+fps = raw_input("Frames per second [1]:")
+if len(fps) == 0:
+  fps=float(1)
+else:
+  fps = float(fps)
 
 host = raw_input("DAG host:")
+
 username = raw_input("username [mapr]:")
 if len(username) == 0:
   username="mapr"
+
 password = getpass.getpass(prompt = "Password [maprmapr]:")
 if len(password) == 0:
   password="maprmapr"
+
 tbl_path = raw_input("Table path [/demo-tables/raw-images]:")
 if len(tbl_path) == 0:
   tbl_path="/demo-tables/raw-images"
@@ -52,12 +61,13 @@ if connection.is_store_exists(store_path=tbl_path):
 else:
   document_store = connection.create_store(store_path=tbl_path)
 
-
+"""
 if len(sys.argv) > 1:
     fps = float(sys.argv[1])
 else:
     print("USAGE: Frames-per-second must be specified as a command line argument")
     exit(1)
+"""
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,320)
