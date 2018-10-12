@@ -38,7 +38,7 @@ su mapr -c 'bash ./cluster/setup-cluster.sh'
 #Set up streams bits
 echo "Executing streams setup"
 #set up streams demo bits
-su mapr -c 'bash ./processor/setup-streams.sh'
+su mapr -c 'bash ./processor/setup-streams-client.sh'
 
 #Start image processor
 echo "Starting streams processor"
