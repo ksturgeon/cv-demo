@@ -2,7 +2,7 @@
 
 from confluent_kafka import Consumer, KafkaError
 from flask import Flask, Response
-import cv2, os, json, time
+import cv2, os, json, time, base64
 import numpy as np
 import argparse
 
@@ -26,11 +26,11 @@ def kafkastream():
         msg = c.poll(timeout=0.2)
         if msg is None: continue
         if not msg.error():
-            nparr = np.fromstring(msg.value(), np.uint8)
+            nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['image'], np.uint8)
             image = cv2.imdecode(nparr, 1)
             ret, jpeg = cv2.imencode('.png', image)
             bytecode = jpeg.tobytes()
-            time.sleep(args.timeout)
+            time.sleep(1)
             yield (b'--frame\r\n'
                b'Content-Type: image/png\r\n\r\n' + bytecode + b'\r\n\r\n')
 
@@ -42,10 +42,10 @@ def kafkastream():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='mapr consumer settings')
     # specify which stream, topic to read from, what is the consumer group and port to use.
-    parser.add_argument('--groupid', default='dong00', help='')
-    parser.add_argument('--stream', default='/tmp/personalstream', help='')
-    parser.add_argument('--topic', default='all', help='')
-    parser.add_argument('--timeout', default='0.035', type=float, help='')
-    parser.add_argument('--port', default='5010', type=int, help='')
-    args = parser.parse_args()
-    app.run(host='0.0.0.0', port=args.port, debug=True)
+    #parser.add_argument('--groupid', default='dong00', help='')
+    #parser.add_argument('--stream', default='/tmp/personalstream', help='')
+    #parser.add_argument('--topic', default='all', help='')
+    #parser.add_argument('--timeout', default='0.035', type=float, help='')
+    #parser.add_argument('--port', default='5010', type=int, help='')
+    #args = parser.parse_args()
+    app.run(host='0.0.0.0', port=5010, debug=True)
