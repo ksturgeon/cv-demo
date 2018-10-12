@@ -1,33 +1,53 @@
-import cv2
-import sys
-import time
+import cv2 sys time datetime json base64
+from confluent_kafka import Consumer, KafkaError
+import numpy as np
 
 # Get user supplied values
-imagePath = sys.argv[1]
+#imagePath = sys.argv[1]
 cascPath = "haarcascade_frontalface_default.xml"
 
 # Create the haar cascade
 faceCascade = cv2.CascadeClassifier(cascPath)
 
+""" 
+Removing the original read from file - replacing with a Streams consumer
 # Read the image
 image = cv2.imread(imagePath)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+"""
+c = Consumer({'group.id': 'mygroup',
+              'default.topic.config': {'auto.offset.reset': 'earliest'}})
+c.subscribe(['/demo-streams/dbchanges:topic1'])
+running = True
+while running:
+  msg = c.poll(timeout=1.0)
+  if msg is None: continue
+  if not msg.error():
+    # Replace the simple receiver with the streams consumer
+    # Get the message and pull off the image field
+    # Load as a json document, retrieve image element and decode from base64
+    image = base64.b64decode(json.loads(msg.value())['image'])
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Detect faces in the image
+    faces = faceCascade.detectMultiScale(
+      gray,
+      scaleFactor=1.1,
+      minNeighbors=5,
+      minSize=(30, 30)
+    )
+    print("Found {0} faces!".format(len(faces)))
 
-# Detect faces in the image
-faces = faceCascade.detectMultiScale(
-    gray,
-    scaleFactor=1.1,
-    minNeighbors=5,
-    minSize=(30, 30)
-    #flags = cv2.CV_HAAR_SCALE_IMAGE
-)
+    # Draw a rectangle around the faces
+    for (x, y, w, h) in faces:
+      cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    
+    #  Write processed image
+    with open('test.jpg', 'wb') as f_output:
+      f_output.write(image)
+  elif msg.error().code() != KafkaError._PARTITION_EOF:
+    print(msg.error())
+    running = False
+c.close()
 
-print("Found {0} faces!".format(len(faces)))
 
-# Draw a rectangle around the faces
-for (x, y, w, h) in faces:
-    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-cv2.imshow("Faces found", image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
