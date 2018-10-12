@@ -2,4 +2,4 @@
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mapr/lib
 
-python myflask.sh & 
+python ./viewer/myflask.sh & 
