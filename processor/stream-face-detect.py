@@ -33,7 +33,7 @@ while running:
     # Load as a json document, retrieve image element and decode from base64
     nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['$$document']['image']), np.uint8)
     img = cv2.imdecode(nparr, 1)
-    image = cv2.imencode('.jpg', image)
+    image = cv2.imencode('.jpg', img)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     
     # Detect faces in the image
