@@ -4,12 +4,13 @@ import time
 import datetime 
 import json 
 import base64
+import os
 
 from confluent_kafka import Consumer, KafkaError
 import numpy as np
 
-# Get user supplied values
-#imagePath = sys.argv[1]
+os.environ['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:/opt/mapr/lib"
+
 cascPath = "haarcascade_frontalface_default.xml"
 
 # Create the haar cascade
