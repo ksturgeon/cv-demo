@@ -33,27 +33,21 @@ curl -sSk -X POST -u ${MAPR_ADMIN}:${MAPR_ADMIN_PASS} ""${MCS_URL}/rest/volume/l
 
 # Set up cluster environment
 echo "Executing cluster setup"
-su mapr -c 'bash setup-environment.sh'
-
-#Set up Filesystem demo bits
-echo "Executing filesystem setup"
-su mapr -c 'bash setup-filesystem.sh'
-
-
-#Set up tables bits
-echo "Executing tables setup" 
-# Set up DB tables demo bits
-su mapr -c 'bash setup-tables.sh'
+su mapr -c 'bash ./cluster/setup-cluster.sh'
 
 #Set up streams bits
 echo "Executing streams setup"
 #set up streams demo bits
-su mapr -c 'bash setup-streams.sh'
+su mapr -c 'bash ./processor/setup-streams.sh'
 
-#Start writing data to streams
-echo "Executing Streams writer"
+#Start image processor
+echo "Starting streams processor"
 
-su mapr -c 'bash write-stream.sh'
+su mapr -c 'bash ./processor/stream-face-detect.sh'
+
+#Start browser viewer
+echo "starting browser viewer"
+su mapr -c 'bash ./viewer/myflask.sh'
 
 # You should always end with a good exit :)
 exit 0
