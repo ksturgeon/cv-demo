@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #Install and configure the python streams client
-sudo apt-get install gcc python-devel python-pip -y
+sudo apt-get install gcc python-dev python-pip -y
 
 echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mapr/lib" >> /home/mapr/.bashrc
 
