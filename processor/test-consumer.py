@@ -1,7 +1,9 @@
 #! /usr/bin/python
 
 from confluent_kafka import Consumer, KafkaError
-import datetime
+import datetime, os
+os.environ['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:/opt/mapr/lib"
+
 c = Consumer({'group.id': 'mygroup',
               'default.topic.config': {'auto.offset.reset': 'earliest'}})
 c.subscribe(['/demo-streams/dbchanges:topic1'])
