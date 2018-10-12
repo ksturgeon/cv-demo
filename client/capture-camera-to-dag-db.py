@@ -6,6 +6,7 @@ from mapr.ojai.storage.ConnectionFactory import ConnectionFactory
 
 import numpy as np
 import sys, cv2, time, pickle, json, getpass, base64
+import os
 
 def resize(im, target_size, max_size):
     """
@@ -23,6 +24,8 @@ def resize(im, target_size, max_size):
         im_scale = float(max_size) / float(im_size_max)
     im = cv2.resize(im, None, None, fx=im_scale, fy=im_scale, interpolation=cv2.INTER_LINEAR)
     return im, im_scale
+
+os.environ['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:/opt/mapr/lib"
 
 print("Non-secure cluster only, existing blank table with CDC turned on")
 print("Check X Server running and accepting inbound connections via xhost +")

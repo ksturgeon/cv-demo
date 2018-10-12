@@ -13,5 +13,8 @@ maprcli table create -path /demo-tables/raw-images -tabletype json
 maprcli stream create -path /demo-streams/dbchanges -produceperm p -consumeperm p -topicperm p -ischangelog true
 maprcli stream topic create -path /demo-streams/dbchanges -topic topic1 -partitions 3
 
+maprcli stream create -path /demo-streams/processed-images -produceperm p -consumeperm p -topicperm p
+maprcli stream topic create -path /demo-streams/processed-images -topic topic1 -partitions 3
+
 # Set up table change propagation
 maprcli table changelog add -path /demo-tables/raw-images -changelog /demo-streams/dbchanges:topic1 -useexistingtopic true
