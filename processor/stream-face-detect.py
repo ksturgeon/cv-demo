@@ -31,7 +31,7 @@ while running:
     # Replace the simple receiver with the streams consumer
     # Get the message and pull off the image field
     # Load as a json document, retrieve image element and decode from base64
-    image = base64.b64decode(json.loads(msg.value())['image'])
+    image = base64.b64decode(json.loads(msg.value())['$$document']['image'])
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     
     # Detect faces in the image
