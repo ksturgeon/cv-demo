@@ -1,4 +1,10 @@
-import cv2 sys time datetime json base64
+import cv2 
+import sys 
+import time 
+import datetime 
+import json 
+import base64
+
 from confluent_kafka import Consumer, KafkaError
 import numpy as np
 
