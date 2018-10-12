@@ -6,7 +6,7 @@ import json
 import base64
 import os
 
-from confluent_kafka import Consumer, KafkaError
+from confluent_kafka import Producer, Consumer, KafkaError
 import numpy as np
 
 os.environ['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:/opt/mapr/lib"
@@ -49,9 +49,17 @@ while running:
     for (x, y, w, h) in faces:
       cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
     
-    #  Write processed image
-    cv2.imwrite('test.jpg', image)
-  
+    # Write processed image
+    # To a file:
+    #cv2.imwrite('test.jpg', image)
+    
+    # To a stream:
+    p = Producer({'streams.producer.default.stream': '/demo-streams/processed-images'})
+    json_data = json.loads(msg.value())['$$document']
+    json_data.append({'num_faces':len(faces)})
+    p.produce('topic1', json.dumps(json_data))
+    p.flush()
+     
   elif msg.error().code() != KafkaError._PARTITION_EOF:
     print(msg.error())
     running = False
