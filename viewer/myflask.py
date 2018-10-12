@@ -27,7 +27,7 @@ def kafkastream():
         if msg is None: continue
         if not msg.error():
             nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['image'], np.uint8))
-            print(json.loads(msg.value())['image']
+            print(json.loads(msg.value())['image'])
             image = cv2.imdecode(nparr, 1)
             ret, jpeg = cv2.imencode('.jpg', image)
             bytecode = jpeg.tobytes()
