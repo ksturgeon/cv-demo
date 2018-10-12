@@ -38,7 +38,7 @@ while running:
     # Detect faces in the image
     faces = faceCascade.detectMultiScale(
       gray,
-      scaleFactor=1.1,
+      scaleFactor=1.02,
       minNeighbors=5,
       minSize=(30, 30)
     )
@@ -49,7 +49,7 @@ while running:
       cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
     
     #  Write processed image
-    with open('test.jpg', 'wb') as f_output:
+    with open('test.jpg', 'w') as f_output:
       ret, jpeg = cv2.imencode('.jpg', image)
       f_output.write(image)
   elif msg.error().code() != KafkaError._PARTITION_EOF:
