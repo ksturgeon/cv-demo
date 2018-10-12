@@ -28,11 +28,11 @@ def kafkastream():
         if not msg.error():
             nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['image'], np.uint8))
             image = cv2.imdecode(nparr, 1)
-            ret, jpeg = cv2.imencode('.png', image)
+            ret, jpeg = cv2.imencode('.jpg', image)
             bytecode = jpeg.tobytes()
             time.sleep(.035)
             yield (b'--frame\r\n'
-               b'Content-Type: image/png\r\n\r\n' + bytecode + b'\r\n\r\n')
+               b'Content-Type: image/jpg\r\n\r\n' + bytecode + b'\r\n\r\n')
 
         elif msg.error().code() != KafkaError._PARTITION_EOF:
             print(msg.error())
