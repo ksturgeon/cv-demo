@@ -11,4 +11,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mapr/lib
 
 sudo pip install --global-option=build_ext --global-option="--library-dirs=/opt/mapr/lib" --global-option="--include-dirs=/opt/mapr/include/" mapr-streams-python
 
-sudo pip install scipy numpy opencv-python
+sudo pip install scipy numpy opencv-python flask
