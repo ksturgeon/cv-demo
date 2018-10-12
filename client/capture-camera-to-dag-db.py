@@ -27,17 +27,17 @@ def resize(im, target_size, max_size):
 print("Non-secure cluster only, existing blank table with CDC turned on")
 print("Check X Server running and accepting inbound connections via xhost +")
 
-dvc = raw_input("device [0] for integrated camera, 1 for USB camera:")
+dvc = raw_input("If USB camera, then device 1 is integrated, 0 is USB [0]:")
 if len(dvc) == 0:
   dvc=int(0)
 else:
   dvc=int(dvc)
 
-fps = raw_input("Frames per second [1]:")
-if len(fps) == 0:
-  fps=float(1)
+spf = raw_input("Seconds per Frame [2]:")
+if len(spf) == 0:
+  spf=float(2)
 else:
-  fps = float(fps)
+  spf = float(spf)
 
 host = raw_input("DAG host:")
 
@@ -67,8 +67,8 @@ else:
 
 # Open camera device
 cap = cv2.VideoCapture(dvc)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH,320)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT,240)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
 frame_counter = 0
 while (cap.isOpened):
@@ -77,8 +77,8 @@ while (cap.isOpened):
     ret, frame = cap.read()
     # Our operations on the frame come here
     image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    image, scale = resize(image, 240, 320)
-    ret, jpeg = cv2.imencode('.png', image)
+    #image, scale = resize(image, 240, 320)
+    ret, jpeg = cv2.imencode('.jpg', image)
     # Display the resulting frame
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -91,7 +91,7 @@ while (cap.isOpened):
     #p.produce('topic1', jpeg.tostring(), str(frame_counter))
     
     print("frame: "+str(frame_counter))
-    time.sleep(1/fps)
+    time.sleep(spf)
 
 connection.close()
 #p.flush()
