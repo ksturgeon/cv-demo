@@ -30,7 +30,7 @@ def kafkastream():
             image = cv2.imdecode(nparr, 1)
             ret, jpeg = cv2.imencode('.png', image)
             bytecode = jpeg.tobytes()
-            time.sleep(1)
+            time.sleep(.035)
             yield (b'--frame\r\n'
                b'Content-Type: image/png\r\n\r\n' + bytecode + b'\r\n\r\n')
 
