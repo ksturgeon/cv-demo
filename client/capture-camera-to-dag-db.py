@@ -77,7 +77,7 @@ while (cap.isOpened):
     ret, frame = cap.read()
     # Our operations on the frame come here
     image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    #image, scale = resize(image, 240, 320)
+    image, scale = resize(image, 480, 640)
     ret, jpeg = cv2.imencode('.jpg', image)
     # Display the resulting frame
     cv2.imshow('frame',frame)

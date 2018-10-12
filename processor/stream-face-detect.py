@@ -49,9 +49,8 @@ while running:
       cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
     
     #  Write processed image
-    with open('test.jpg', 'w') as f_output:
-      ret, jpeg = cv2.imencode('.jpg', image)
-      f_output.write(image)
+    cv2.imwrite('test.jpg', image)
+  
   elif msg.error().code() != KafkaError._PARTITION_EOF:
     print(msg.error())
     running = False
