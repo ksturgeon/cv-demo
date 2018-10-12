@@ -31,7 +31,7 @@ while running:
     # Replace the simple receiver with the streams consumer
     # Get the message and pull off the image field
     # Load as a json document, retrieve image element and decode from base64
-    nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['$$document']['image']))
+    nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['$$document']['image']), np.uint8)
     img = cv2.imdecode(nparr, 1)
     image = cv2.imencode('.jpg', image)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
