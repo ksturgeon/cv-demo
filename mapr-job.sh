@@ -6,7 +6,7 @@ source /opt/mapr/docker/start-env.sh
 MCS_PORT=${MCS_PORT:-8443}
 MCS_URL="https://${MCS_HOST}:${MCS_PORT}"
 echo ""
-echo "MapR JOB script executing for demo, Enterprise Features."
+echo "MapR JOB script executing for demo, Computer Vision."
 echo ""
 chk_str="Waiting ..."
 # Check that the CLDB is up and running.
@@ -33,21 +33,21 @@ curl -sSk -X POST -u ${MAPR_ADMIN}:${MAPR_ADMIN_PASS} ""${MCS_URL}/rest/volume/l
 
 # Set up cluster environment
 echo "Executing cluster setup"
-su mapr -c 'bash ./cluster/setup-cluster.sh'
+su mapr -c 'bash setup-cluster.sh'
 
 #Set up streams bits
 echo "Executing streams setup"
 #set up streams demo bits
-su mapr -c 'bash ./processor/setup-streams-client.sh'
+su mapr -c 'bash setup-streams-client.sh'
 
 #Start image processor
 echo "Starting streams processor"
 
-su mapr -c 'bash ./processor/stream-face-detect.sh'
+su mapr -c 'bash stream-face-detect.sh'
 
 #Start browser viewer
 echo "starting browser viewer"
-su mapr -c 'bash ./viewer/myflask.sh'
+su mapr -c 'bash myflask.sh'
 
 # You should always end with a good exit :)
 exit 0
