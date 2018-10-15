@@ -28,7 +28,7 @@ def kafkastream():
         if not msg.error():
             # Trying some concantenation
             nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['image']), np.uint8)
-            nparr = nparr.concatenate((nparr, np.fromstring(base64.b64decode(json.loads(msg.value())['processed_image']), np.uint8)))
+            nparr = np.concatenate((nparr, np.fromstring(base64.b64decode(json.loads(msg.value())['processed_image']), np.uint8)))
 
             image = cv2.imdecode(nparr, 1)
             ret, jpeg = cv2.imencode('.jpg', image)
