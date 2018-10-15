@@ -49,8 +49,9 @@ while running:
     
     # To a stream:
     p = Producer({'streams.producer.default.stream': '/demo-streams/processed-images'})
+    # Add the original image to the stream payload
     json_data = json.loads(msg.value())['$$document']
-    #json_data = {}
+    # Encode the new image as jpeg as well
     ret, s_jpg = cv2.imencode('.jpg', image)
     json_data['processed_image'] = base64.b64encode(s_jpg)
     json_data['num_faces']=len(faces)
