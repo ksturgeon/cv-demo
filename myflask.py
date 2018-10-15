@@ -27,19 +27,13 @@ def kafkastream():
         if msg is None: continue
         if not msg.error():
             # Trying some concantenation
-            nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['image']), np.uint8)
+            nparr = np.fromstring(base64.b64decode(json.loads(msg.value())['processed_image']), np.uint8)
             image = cv2.imdecode(nparr, 1)
             ret, jpeg = cv2.imencode('.jpg', image)
             bytecode = jpeg.tobytes()
-
-            nparr2 = np.fromstring(base64.b64decode(json.loads(msg.value())['processed_image']), np.uint8)
-            image2 = cv2.imdecode(nparr2, 1)
-            ret, jpeg2 = cv2.imencode('.jpg', image2)
-            bytecode2 = jpeg2.tobytes()
-
             time.sleep(.035)
             yield (b'--frame\r\n'
-               b'Content-Type: image/jpg\r\n\r\n' + bytecode + bytecode2 + b'\r\n\r\n')
+               b'Content-Type: image/jpg\r\n\r\n' + bytecode + b'\r\n\r\n')
 
         elif msg.error().code() != KafkaError._PARTITION_EOF:
             print(msg.error())
