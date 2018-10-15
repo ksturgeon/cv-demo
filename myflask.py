@@ -39,7 +39,7 @@ def kafkastream():
 
             time.sleep(.035)
             yield (b'--frame\r\n'
-               b'Content-Type: image/jpg\r\n\r\n' + bytecode + b'\r\n\r\n' + bytecode2 + b'\r\n\r\n')
+               b'Content-Type: image/jpg\r\n\r\n' + bytecode + bytecode2 + b'\r\n\r\n')
 
         elif msg.error().code() != KafkaError._PARTITION_EOF:
             print(msg.error())
