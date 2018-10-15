@@ -32,7 +32,7 @@ def kafkastream():
             ret, jpeg = cv2.imencode('.jpg', image)
             bytecode = jpeg.tobytes()
 
-            nparr2 = np.fromstring(base64.b64decode(json.loads(msg.value())['processed_image']), np.uint8)
+            nparr2 = np.fromstring(json.loads(msg.value())['processed_image'], np.uint8)
             image2 = cv2.imdecode(nparr2, 1)
             ret, jpeg2 = vc2.imencode('jpg', image2)
             bytecode2 = jpeg2.tobytes()
