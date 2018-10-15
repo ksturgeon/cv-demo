@@ -50,6 +50,7 @@ while running:
     # To a stream:
     p = Producer({'streams.producer.default.stream': '/demo-streams/processed-images'})
     json_data = json.loads(msg.value())['$$document']
+    json_data['processed_image'] = base64.b64encode(image)
     json_data['num_faces']=len(faces)
     p.produce('topic1', json.dumps(json_data))
     p.flush()

@@ -79,9 +79,9 @@ while (cap.isOpened):
     # Capture frame-by-frame
     ret, frame = cap.read()
     # Our operations on the frame come here
-    image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    image, scale = resize(image, 480, 640)
-    ret, jpeg = cv2.imencode('.jpg', image)
+    #image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    #image, scale = resize(image, 480, 640)
+    ret, jpeg = cv2.imencode('.jpg', frame)
     # Display the resulting frame
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
