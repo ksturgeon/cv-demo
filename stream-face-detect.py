@@ -51,7 +51,8 @@ while running:
     p = Producer({'streams.producer.default.stream': '/demo-streams/processed-images'})
     json_data = json.loads(msg.value())['$$document']
     #json_data = {}
-    json_data['processed_image'] = base64.b64encode(cv2.imencode('.jpg', image))
+    s_jpg = cv2.imencode('.jpg', image)
+    json_data['processed_image'] = base64.b64encode(s_jpg)
     json_data['num_faces']=len(faces)
     p.produce('topic1', json.dumps(json_data))
     p.flush()
