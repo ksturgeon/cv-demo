@@ -54,8 +54,10 @@ Captures webcam (either built in or USB web camera) frames at a given rate (defa
 * ```Username, password, table path`` - can accept the defaults by hitting [Enter].
 * Terminal window will show frames being captured.
 * By clicking on the “python” process in your task bar, you can see the captured image at 640x480 pixels:
+
 ![taskbar.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/taskbar.png)![cap_face.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/cap_face.png)
 * By clicking on the browser that is open to port 5010, you can see the processed image.  Play with depth of field (seems to work better with smaller faces - so pull back from the webcam or move the webcam around), but you can get it to work decently  well.
+
 ![found_face.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/found_face.png)
 
 ### Caveats:###
