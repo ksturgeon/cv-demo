@@ -51,7 +51,7 @@ Captures webcam (either built in or USB web camera) frames at a given rate (defa
 * ```If USB camera, then device 1 is integrated, 0 is USB [0]:```  If you’ve plugged in an external USB camera, that becomes device 0, and the integrated webcam becomes device 1.  I recommend an external camera, because you can play with depth of field and capturing audience.  Default is 0 if you hit [Enter].
 * ```Seconds per Frame [2]:```  I recommend just accepting the default of 2 hit [Enter].
 * ```DAG host:```  Note there is no default - enter the fqdn of the dag component from Step 3 above.
-* ```Username, password, table path`` - can accept the defaults by hitting [Enter].
+* ```Username, password, table path``` - can accept the defaults by hitting [Enter].
 * Terminal window will show frames being captured.
 * By clicking on the “python” process in your task bar, you can see the captured image at 640x480 pixels:
 
