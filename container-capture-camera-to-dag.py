@@ -28,34 +28,28 @@ def resize(im, target_size, max_size):
 
 os.environ['LD_LIBRARY_PATH'] = "$LD_LIBRARY_PATH:/opt/mapr/lib"
 
+# Stripping out all the interactive stuff
 print("Non-secure cluster only, existing blank table with CDC turned on")
 print("Check X Server running and accepting inbound connections via xhost +")
 
-dvc = raw_input("If USB camera, then device 1 is integrated, 0 is USB [0]:")
-if len(dvc) == 0:
-  dvc=int(0)
-else:
-  dvc=int(dvc)
+# Static device 0
+dvc=int(0)
 
-spf = raw_input("Seconds per Frame [2]:")
-if len(spf) == 0:
-  spf=float(2)
-else:
-  spf = float(spf)
 
-host = raw_input("DAG host:")
+# Static Framerate
+spf=float(2)
 
-username = raw_input("username [mapr]:")
-if len(username) == 0:
-  username="mapr"
+# Grab the DAG host from the env variable
+host = os.environ["DAG_HOST"]
 
-password = getpass.getpass(prompt = "Password [maprmapr]:")
-if len(password) == 0:
-  password="maprmapr"
+# Static username
+username="mapr"
 
-tbl_path = raw_input("Table path [/demo-tables/raw-images]:")
-if len(tbl_path) == 0:
-  tbl_path="/demo-tables/raw-images"
+# Static password
+password="maprmapr"
+
+# Static table path
+tbl_path="/demo-tables/raw-images"
 
 """Create a connection, capture frame, preprocess, insert new document into store"""
 
