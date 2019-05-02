@@ -2,10 +2,10 @@
 
 ### Background ###
 Provides a similar demonstration to Ian Downard’s Facial Recognition post in blogs ([https://mapr.com/blog/dynamic-scaling-computer-vision-pub-sub-messaging-docker/](https://mapr.com/blog/dynamic-scaling-computer-vision-pub-sub-messaging-docker/) ) and the MapR public demo repo ([https://github.com/mapr-demos/mapr-streams-mxnet-face](https://github.com/mapr-demos/mapr-streams-mxnet-face) ).  That demo has certain limitations to making it transportable:
-* It requires GPUs due to the mxnet/tensorflow/CUDA libraries used.
-* It requires the web capture client run inside a container, inside of a Linux VM on the user’s laptop due to device mapping limitations with Docker for Mac.
+* That demo requires GPUs due to the mxnet/tensorflow/CUDA libraries used.
+* That demo requires the web capture client run inside a container, inside of a Linux VM on the user’s laptop due to device mapping limitations with Docker for Mac.
 
-**This Demo**
+### This Demo ###
 Consists of four major components;
 
 **1. Client.**  The client runs a small python script (capture-camera-to-dag-db.py) that;
