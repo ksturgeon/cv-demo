@@ -46,7 +46,7 @@ Consists of four major components;
 * ```git clone http://git.se.corp.maprtech.com/ksturgeon/cv-demo.git ```
 
 ### Demo Process: ###
-1. Deploy “Facial Recognition demo” Demo environment.  This should set up the cluster, and launch the image processor and viewer scripts in the background.
+1. Run the mapr-job.sh on an edge node. You will have to edit the environment variables to appy to your environment.  This executes cluster setup and background process execution.
 2. When the deployment starts, open a **browser** to the new “edge” host:5010, in a new tab - it should open to a blank page and just “spin” waiting for data.
 3. Make note/copy the FQDN of the “dag” component (should be “dag-XXXXXX.se.corp.maprtech.com”) in App Lariat.
 4. Run the “capture-camera-to-dag-db.py” script (```python capture-camera-to-dag.py```).  Answer the following questions;
