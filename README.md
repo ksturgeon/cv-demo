@@ -27,7 +27,7 @@ Consists of four major components;
 * Listens for HTTP requests on port 5010.
 * Responds with the “processed” image JPEG so you can see it in your browser.
 
-### Environment Setup###
+### Environment Setup ###
 **Your Mac needs some prerequisites.**
 
 **1. Stable Python 2.7 environment.**  Either native or via condas/anaconda.  I used Anaconda Navigator ([https://docs.anaconda.com/anaconda/navigator/](https://docs.anaconda.com/anaconda/navigator/)) to build a python 2.7 environment I enable using conda command ```source activate <name>``` where <name> is the environment I built. 
