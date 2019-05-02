@@ -5,7 +5,7 @@ Provides a similar demonstration to Ian Downard’s Facial Recognition post in b
 * It requires GPUs due to the mxnet/tensorflow/CUDA libraries used.
 * It requires the web capture client run inside a container, inside of a Linux VM on the user’s laptop due to device mapping limitations with Docker for Mac.
 
-**App Lariat Demo ([http://git.se.corp.maprtech.com/ksturgeon/cv-demo](http://git.se.corp.maprtech.com/ksturgeon/cv-demo))**
+**This Demo**
 Consists of four major components;
 
 **1. Client.**  The client runs a small python script (capture-camera-to-dag-db.py) that;
