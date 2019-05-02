@@ -1,3 +1,5 @@
+![diagram.jpg](https://github.com/ksturgeon/cv-demo/blob/master/diagram.jpg)
+
 ### Background ###
 Provides a similar demonstration to Ian Downard’s Facial Recognition post in blogs ([https://mapr.com/blog/dynamic-scaling-computer-vision-pub-sub-messaging-docker/](https://mapr.com/blog/dynamic-scaling-computer-vision-pub-sub-messaging-docker/) ) and the MapR public demo repo ([https://github.com/mapr-demos/mapr-streams-mxnet-face](https://github.com/mapr-demos/mapr-streams-mxnet-face) ).  That demo has certain limitations to making it transportable:
 * It requires GPUs due to the mxnet/tensorflow/CUDA libraries used.
@@ -7,7 +9,7 @@ Provides a similar demonstration to Ian Downard’s Facial Recognition post in b
 Consists of four major components;
 
 **1. Client.**  The client runs a small python script (capture-camera-to-dag-db.py) that;
-Captures webcam (either built in or USB web camera) frames at a given rate (default of one every 2 seconds to save resources).
+* Captures webcam (either built in or USB web camera) frames at a given rate (default of one every 2 seconds to save resources).
 * Serializes the captured frame as a string and writes to MapR-DB using the 6.1 lightweight maprdb-python-client (OJAI client for MapR-DB JSON).
 
 **2. Cluster.** The cluster hosts three entities;
@@ -43,7 +45,7 @@ Captures webcam (either built in or USB web camera) frames at a given rate (defa
 **Clone the cv-demo project to your laptop.**
 * ```git clone http://git.se.corp.maprtech.com/ksturgeon/cv-demo.git ```
 
-### Demo Process:###
+### Demo Process: ###
 1. Deploy “Facial Recognition demo” Demo environment.  This should set up the cluster, and launch the image processor and viewer scripts in the background.
 2. When the deployment starts, open a **browser** to the new “edge” host:5010, in a new tab - it should open to a blank page and just “spin” waiting for data.
 3. Make note/copy the FQDN of the “dag” component (should be “dag-XXXXXX.se.corp.maprtech.com”) in App Lariat.
@@ -55,12 +57,15 @@ Captures webcam (either built in or USB web camera) frames at a given rate (defa
 * Terminal window will show frames being captured.
 * By clicking on the “python” process in your task bar, you can see the captured image at 640x480 pixels:
 
-![taskbar.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/taskbar.png)![cap_face.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/cap_face.png)
+<img src="https://github.com/ksturgeon/cv-demo/blob/master/taskbar.png" width="200">
+
+<img src="https://github.com/ksturgeon/cv-demo/blob/master/cap_face.png" width="400">
+
 * By clicking on the browser that is open to port 5010, you can see the processed image.  Play with depth of field (seems to work better with smaller faces - so pull back from the webcam or move the webcam around), but you can get it to work decently  well.
 
-![found_face.png](http://git.se.corp.maprtech.com/ksturgeon/cv-demo/src/master/found_face.png)
+<img src="https://github.com/ksturgeon/cv-demo/blob/master/found_face.png" width="400">
 
-### Caveats:###
+### Caveats: ###
 * I haven’t tested this for longevity.  It is possible that I will run out of space in the stream, cluster, or get too far behind since it’s a multi-tenant environment.  To be safe, run the capture script (on your mac) only when you’re ready to show it, or slow down the capture rate.
 * One of these days, I’ll persist the small amount of metadata (or use a better image recognition/cv routine) to get better metadata into another DB table, so you can show queries like “How many ppl in the room” - or maybe do something slick like identify attention on the screen (eye recog) or some such.  Even though the data is in the processed stream, it’s not being used.
 * This departs from the “official” demo since it doesn’t run the capture or the viewer in their own containers.  There’s nothing that would prevent you from doing so - could use a PACC image or a lightweight client one like here - [https://hub.docker.com/r/ksturgeon/mapr-dag-python-client/](https://hub.docker.com/r/ksturgeon/mapr-dag-python-client/)
